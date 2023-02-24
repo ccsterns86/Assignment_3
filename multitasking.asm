@@ -126,30 +126,30 @@ loop_2:
 # ---------------------------------------
 process_3:
 
-beginLoop1:
+beginLoop1: #set beginning point of loop
 	li s0, 0x10000000
 	la s1, image
 	li s2, 64
 
-loop1: 
-	lw s3, 0(s1)
-	sw s3, 0(s0)
-	addi s1, s1, 4
-	addi s0, s0, 4
-	addi s2, s2, -1
-	beqz s2, beginLoop2
+loop1: #display the image
+	lw s3, 0(s1) #load word for the image
+	sw s3, 0(s0) #set value in the display
+	addi s1, s1, 4 #increment image location
+	addi s0, s0, 4 #increment display location
+	addi s2, s2, -1 #keep track of number of pixels left
+	beqz s2, beginLoop2 #if s2 is 0, image done
 	j loop1
 	
-beginLoop2:
+beginLoop2: #set beginning point of loop
 	li s0, 0x10000000
 	li s2, 64
 	li s3, 0
 
-loop2: 
-	sw s3, 0(s0)
-	addi s0, s0, 4
-	addi s2, s2, -1
-	beqz s2, beginLoop1
+loop2: #blank the display
+	sw s3, 0(s0) #set value in display to black
+	addi s0, s0, 4 #increment display location
+	addi s2, s2, -1 #keep track of pixels left
+	beqz s2, beginLoop1 #if s2 is 0, image cleared
 	j loop2
 
 
