@@ -66,19 +66,29 @@ image:
 	.word 0x144f24
 
 .text
+beginLoop1:
 	li s0, 0x10000000
 	la s1, image
 	li s2, 64
 
-loop: 
+loop1: 
 	lw s3, 0(s1)
 	sw s3, 0(s0)
 	addi s1, s1, 4
 	addi s0, s0, 4
 	addi s2, s2, -1
-	beqz s2, end
-	j loop
+	beqz s2, beginLoop2
+	j loop1
+	
+beginLoop2:
+	li s0, 0x10000000
+	li s2, 64
+	li s3, 0
 
-end:
-	li a7, 10
-	ecall
+loop2: 
+	sw s3, 0(s0)
+	addi s0, s0, 4
+	addi s2, s2, -1
+	beqz s2, beginLoop1
+	j loop2
+
