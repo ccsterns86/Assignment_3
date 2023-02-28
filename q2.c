@@ -13,7 +13,8 @@ int main(int argc, char *argv[])
   int counter = 0;
   int timeInit = uptime();
   int nowTime;
-  printf("Time: %d\n", timeInit);
+  int numTicks = 100;
+  //printf("Time: %d\n", timeInit);
   
   pipe(p1);
   pipe(p2);
@@ -21,29 +22,33 @@ int main(int argc, char *argv[])
   if (fork() == 0) {
     if (fork() == 0) {
       write(p2[1], byte, 1);
-      while((nowTime = uptime()) < (timeInit + 10)) { //loop reading and writing
-        printf("Time internal: %d\n", nowTime);
+      while((nowTime = uptime()) < (timeInit + numTicks)) { //loop reading and writing
+        //printf("Time internal: %d\n", nowTime);
         read(p1[0], byte, 1);
-        counter ++;
+        
         //printf("%d: recieved %s\n", getpid(), byte);
         write(p2[1], byte, 1);
       }
+      exit(0);
     }
     else {
-      while(uptime() < (timeInit + 10)) { //loop reading and writing
+      while(uptime() < (timeInit + numTicks)) { //loop reading and writing
         read(p2[0], byte, 1);
         //printf("%d: recieved %s\n", getpid(), byte);
         write(p3[1], byte, 1);
       }
+      exit(0);
     }
   } 
   else {
-    while(uptime() < (timeInit + 10)) { //loop reading and writing
+    while(uptime() < (timeInit + numTicks)) { //loop reading and writing
       read(p3[0], byte, 1);
+      counter ++;
       //printf("%d: recieved %s\n", getpid(), byte);
       write(p1[1], byte, 1);
     }
   }
   printf("Number of loops: %d\n", counter);
+  printf("Cycles per second: %d\n", counter/10);
   exit(0);
 }
