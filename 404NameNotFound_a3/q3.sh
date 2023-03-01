@@ -2,7 +2,7 @@
 
 #Cassandra Sterns      SID: 22209739
 #Ethan Doyle           SID: 22210635
-cat sample.txt | cut -d " " -f 2-16 | tr ' ' '\n'
+cat sample.txt | cut -d ' ' -f 1 --complement | tr ' ' '\n' 
 # while read line
 # do
 #   read -a myvar <<< $line
