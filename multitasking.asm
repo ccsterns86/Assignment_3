@@ -1,5 +1,6 @@
-# To run this program you need to open Digital Lab Sim tool
-# and connect it to simulation by clicking "Connect to Program"
+# Cassandra Sterns      SID: 22209739
+# Ethan Doyle           SID: 22210635
+
 .data
 image: 	.word 0x53a14e
 	.word 0x208618
